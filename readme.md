@@ -18,11 +18,21 @@ Traditional demand without using excess solar for hot water, smart charging of E
 
 The following table shows outline 20 year savings for different self consumption levels and income from FIT + export tariffs for a 4kW grid-tie solar pv system costing £6000 (installed 2017). Self consumption savings are based on a standard electricity price of 15 p/kWh. Figures have been rounded to the nearest £100. Calculation assumes no energy cost inflation above retail-price-index to keep things simple:
 
-TABLE
+| Self use | 20y Saving | FIT + Export | Total   | Payback | 35y p/kWh |
+|----------|------------|--------------|---------|---------|-----------|
+| 25%      | £2,600     | £4,600       | £7,200  | 16.6    | 8.1       |
+| 50%      | £5,300     | £4,600       | £9,800  | 12.2    | 4.0       |
+| 75%      | £7,900     | £4,600       | £12,500 | 9.6     | 2.7       |
+| 100%     | £10,500    | £4,600       | £15,100 | 8.0     | 2.0       |
 
 For a view towards unsubsidised solar, this time over a potential 35 year system lifespan including an inverter replacement:
 
-TABEL
+| Self use | 35y Saving | Payback | p/kWh |
+|----------|------------|---------|-------|
+| 25%      | £4,600     | 45.7    | 22.9  |
+| 50%      | £9,200     | 22.9    | 11.4  |
+| 75%      | £13,800    | 15.2    | 7.6   |
+| 100%     | £18,400    | 11.4    | 5.7   |
 
 ### Increasing self-consumption 
 
