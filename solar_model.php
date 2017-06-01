@@ -31,10 +31,35 @@
    $import_unitcost = 0.152;
    $generation_tariff = 0.0411;
    $export_tariff = 0.049;
-   $system_cost = 6000+185; // pv system cost + pv diverter
-   $tariff_lifetime = 20;
-   $system_lifetime = 35;
    
+   // Basic capacity based installation cost model
+   // 4kW system £5000 for 4kW..
+   // - panels: ~ £2200
+   // - inverter: ~ £1000
+   // - cables + misc: ~ £400
+   // - installation, scaffold, misc: £1400
+   // kits available for panels, inverters, misc components for £3000 to £3200
+   // full installation average cost £6000 for 4kW.
+   
+   // Solar lifetimes are expected in 35 year +
+   // Inverter lifetimes may now be up to 20-25 years
+   
+   $system_cost = (2500 * pow($solar_kw,-0.368))*$solar_kw;
+   $system_cost = round($system_cost * 0.1) * 10;
+   $system_cost = $system_cost * 0.8;
+  
+   $inverter_replacement_20y = $solar_kw * 250 * 0.4; // Assuming 60% reduction in 4kW inverter costs by 2037
+  
+   // Battery storage
+   $battery_capacity = 2.5;
+   $battery_energy = $battery_capacity * 0.5;
+   
+   $battery_cost_y0 = $battery_capacity * 500.0 * 0.8;    // Price today 2017 after 14% year on year reduction in cost between 2007 and 2014
+   $battery_cost_y15 = $battery_capacity * 114.0;   // 10% year on year reduction in cost from y0 to y15
+   $battery_cost_y30 = $battery_capacity * 56.0;    // 5% year on year reduction in cost from y15 through to y30
+   
+   $full_20y_system_cost = $system_cost + $battery_cost_y0 + ($battery_cost_y15 * 0.25);
+   $full_35y_system_cost = $system_cost + $inverter_replacement_20y + $battery_cost_y0 + $battery_cost_y15 + ($battery_cost_y30*0.25);
 // 6. RUN model from terminal:
 //
 //   $ sudo php solar_model.php
@@ -190,9 +215,9 @@ for ($n=0; $n<$solar_meta->npoints; $n++) {
     $ev = true;
     if ($ev) {
         // Monday
-        // if ($dayofweek==0 && $hour_in_day>=10.0 && $hour_in_day<15.0) $evcharge = 10*230;
+        if ($dayofweek==0 && $hour_in_day>=9.0 && $hour_in_day<11.0) $evcharge = 10*230;
         // Tuesday
-        // if ($dayofweek==1 && $hour_in_day>=10.0 && $hour_in_day<15.0) $evcharge = 10*230;
+        if ($dayofweek==1 && $hour_in_day>=14.0 && $hour_in_day<16.0) $evcharge = 10*230;
         // Wednesday
         if ($dayofweek==2 && $hour_in_day>=10.0 && $hour_in_day<15.0) $evcharge = 10*230;
         // Saturday morning
@@ -203,8 +228,39 @@ for ($n=0; $n<$solar_meta->npoints; $n++) {
     // -------------------------------------------------------------------------------
     // TOTAL CONSUMPTION BEFORE HOT WATER STORE DIVERT
     // -------------------------------------------------------------------------------
+    
     $use_before_hw = $centralheating_standby + $router + $monitoring + $lighting + $laptop1 + $laptop2 + $fridge + $washing + $kettle + $hob + $evcharge;
     $balanceA = $solar - $use_before_hw;
+    
+    // -------------------------------------------------------------------------------
+    // 11. Battery storage
+    // -------------------------------------------------------------------------------
+    if ($balanceA>0) {
+        $charge = $balanceA;
+        $battery_delta = ($charge*0.95 * $solar_meta->interval)/3600000.0;
+        
+        if (($battery_energy+$battery_delta)<=$battery_capacity) {
+            $battery_energy += $battery_delta;
+        } else {
+            $charge = 0;
+        }
+        
+        $balanceA -= $charge;
+        $use_before_hw += $charge;
+    } else {
+        $discharge = -$balanceA;
+        $battery_delta = (($discharge/0.95) * $solar_meta->interval)/3600000.0;
+        
+        if (($battery_energy-$battery_delta)>=0) {
+            $battery_energy -= $battery_delta;
+        } else {
+            $discharge = 0;
+        }
+        
+        $balanceA += $discharge;
+        $use_before_hw -= $discharge;
+    }
+    
     
     // -------------------------------------------------------------------------------
     // 11. Domestic hot water
@@ -236,7 +292,7 @@ for ($n=0; $n<$solar_meta->npoints; $n++) {
         
         
         if ($balanceA>50.0 && $cylinder_temperature<60.0) {
-           $immersion_power = 1.0*$balanceA;
+            $immersion_power = 1.0*$balanceA;
         }
         
         $cylinder_power = $immersion_power - $dhw_heat - $tank_heat_loss;
@@ -265,8 +321,8 @@ for ($n=0; $n<$solar_meta->npoints; $n++) {
     $np ++;
     
     // Output file buffers
-    $buffer .= pack("f",$use);
-    $bufferT .= pack("f",$cylinder_temperature);
+    $buffer .= pack("f",$use+$discharge);
+    $bufferT .= pack("f",$battery_energy);
 
     // Process only 1 year of solar data
     if ($totaltime>(3600*24*365)) break;
@@ -279,6 +335,7 @@ $solar_self_use_prc = $solar_self_use / $solar_total;
 print "------------------------------------------------------------------------\n";
 print "Solar self consumption model\n";
 print "------------------------------------------------------------------------\n";
+print "Solar capacity: ".$solar_kw." kWp\n";
 print "Use: ".round($use_total*0.001)." kWh\n";
 print "Use (kWh/d): ".number_format($use_total*0.001/$number_of_days,1)." kWh\n";
 print "Solar: ".round($solar_total*0.001)." kWh\n";
@@ -290,6 +347,10 @@ print "\n";
 // -------------------------------------------------------------------------------
 // Finances
 // -------------------------------------------------------------------------------
+
+print "System cost 20y: £".$full_20y_system_cost."\n";
+print "System cost 35y: £".$full_35y_system_cost."\n";
+
 $self_consumption_value_1y = $solar_self_use*0.001*$import_unitcost;
 $self_consumption_value_20y = $solar_self_use*0.001*$import_unitcost*20;
 print "Value of solar self consumption @ ".number_format($import_unitcost*100,1)." p/kWh: £".number_format($self_consumption_value_1y,2)."/y (over 20y: £".number_format($self_consumption_value_20y,0).")\n";
@@ -298,18 +359,25 @@ $genexport_value_1y = ($solar_total*0.001*$generation_tariff) + ($solar_total*0.
 $genexport_value_20y = $genexport_value_1y * 20;
 print "Value of generation + 50% export tariff £".number_format($genexport_value_1y,2)."/y (over 20y: £".number_format($genexport_value_20y,0).")\n";
 
-$payback = 20 * ($system_cost / ($self_consumption_value_20y+$genexport_value_20y));
+$payback = 20 * ($full_20y_system_cost / ($self_consumption_value_20y+$genexport_value_20y));
 
 if ($payback<=20) {
+    print "System payback ".number_format($payback,1)."/y\n";
+} else {
+    $payback = ($full_35y_system_cost - $genexport_value_20y) / $self_consumption_value_1y;
     print "System payback ".number_format($payback,1)."/y\n";
 }
 print "\n";
 
-$unsubsidised_35y_unitcost = $system_cost / ($solar_self_use*0.001 * 35);
+$unsubsidised_35y_unitcost = $full_35y_system_cost / ($solar_self_use*0.001 * 35);
 print "Unsubsidised 35 year solar unit cost: ".number_format($unsubsidised_35y_unitcost*100,1)." p/kWh\n";
 
-$unsubsidised_35y_unitcost = ($system_cost - $genexport_value_20y) / ($solar_self_use*0.001 * 35);
+$unsubsidised_35y_unitcost = ($full_35y_system_cost - $genexport_value_20y) / ($solar_self_use*0.001 * 35);
 print "Subsidised 35 year solar unit cost: ".number_format($unsubsidised_35y_unitcost*100,1)." p/kWh\n";
+print "\n";
+
+$unsubsidised_20y_unitcost = ($full_20y_system_cost - $genexport_value_20y) / ($solar_self_use*0.001 * 20);
+print "Subsidised 20 year solar unit cost: ".number_format($unsubsidised_20y_unitcost*100,1)." p/kWh\n";
 print "\n";
 
 createmeta($dir,$consumption_feedid,$solar_meta);
