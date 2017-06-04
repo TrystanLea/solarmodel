@@ -16,23 +16,23 @@ Traditional household demand peaks in the morning and evenings on weekdays with 
 
 Traditional demand without using excess solar for hot water, smart charging of EV’s or battery stores results in a self consumption of around 15-25%.
 
-The following table shows outline 20 year savings for different self consumption levels and income from FIT + export tariffs for a 4kW grid-tie solar pv system costing £6000 (installed 2017). Self consumption savings are based on a standard electricity price of 15 p/kWh. Figures have been rounded to the nearest £100. Calculation assumes no energy cost inflation above retail-price-index to keep things simple:
+The following table shows outline 20 year savings for different self consumption levels and income from FIT + export tariffs for a 4kW grid-tie solar pv system generating an average of 3500 kWh/year for 20 years and costing £6000 (installed 2017). Self consumption savings are based on a standard electricity price of 15 p/kWh. Figures have been rounded to the nearest £100. Calculation assumes no energy cost inflation above retail-price-index to keep things simple:
 
 | Self use | 20y Saving | FIT + Export | Total   | Payback | 35y p/kWh |
 |----------|------------|--------------|---------|---------|-----------|
-| 25%      | £2,600     | £4,600       | £7,200  | 16.6    | 8.1       |
-| 50%      | £5,300     | £4,600       | £9,800  | 12.2    | 4.0       |
-| 75%      | £7,900     | £4,600       | £12,500 | 9.6     | 2.7       |
-| 100%     | £10,500    | £4,600       | £15,100 | 8.0     | 2.0       |
+| 25%      | £2,600     | £4,600       | £7,200  | 16.6    | 6.1       |
+| 50%      | £5,300     | £4,600       | £9,800  | 12.2    | 3.0       |
+| 75%      | £7,900     | £4,600       | £12,500 | 9.6     | 2.0       |
+| 100%     | £10,500    | £4,600       | £15,100 | 8.0     | 1.5       |
 
-For a view towards unsubsidised solar, this time over a potential 35 year system lifespan including an inverter replacement:
+For a view towards unsubsidised solar, this time over a potential 35 year system lifespan including an inverter replacement costing £400 in year 20:
 
 | Self use | 35y Saving | Payback | p/kWh |
 |----------|------------|---------|-------|
-| 25%      | £4,600     | 45.7    | 22.9  |
-| 50%      | £9,200     | 22.9    | 11.4  |
-| 75%      | £13,800    | 15.2    | 7.6   |
-| 100%     | £18,400    | 11.4    | 5.7   |
+| 25%      | £4,600     | 45.7    | 20.9  |
+| 50%      | £9,200     | 22.9    | 10.4  |
+| 75%      | £13,800    | 15.2    | 7.0   |
+| 100%     | £18,400    | 11.4    | 5.2   |
 
 ### Increasing self-consumption 
 
