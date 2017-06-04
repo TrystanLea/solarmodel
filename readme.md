@@ -50,11 +50,11 @@ Another option much talked about at the moment due to the dropping price, a batt
 
 ### Assessing the impact of different solutions on self consumption
 
-In order to quickly get an idea for the potential levels of self consumption that could be reached with different demand patterns, PV Diversion, EV charging and battery storage we have constructed a detailed energy model. The model uses high resolution 10s solar pv data collected by monitoring, constructs a detailed model of household demand and from this calculates the degree of self consumption that would result from different household demand profiles.
+In order to quickly get an idea for the potential levels of self consumption that could be reached with different demand patterns, PV Diversion, EV charging and battery storage, I have constructed a detailed household electricity model. The model uses high resolution 10s solar pv data collected by monitoring, constructs a detailed model of household demand and from this calculates the degree of self consumption that would result from different household demand profiles.
 
-The household model covers the traditional demands such as: lighting, computers, internet router, central heating standby, kettle, electric shower, electric cooking, fridge/freezer, washing machine. Each with start and end times, power levels and in the case of fridge/freezer cycle repeat times. Weekday and weekend schedules are also taken into account.
+The household model covers the traditional demands such as: lighting, laptops, internet router, central heating standby, kettle, electric shower, electric cooking, fridge/freezer, washing machine. Each with start and end times, power levels and in the case of fridge/freezer cycle repeat times. Weekday and weekend schedules are also taken into account.
 
-‘Traditional’ electricity demand can then be added to with PV Diversion, smart EV charging and battery storage to explore how self consumption increases.
+PV Diversion, smart EV charging and battery storage can then be added to explore how self consumption increases.
 
 The model includes basic cost data in order to calculate payback times and the resulting unit cost of the delivered useful electricity. The cost model takes into account inverter and if applicable battery replacement cost and assumes price reductions in these components over time.
 
