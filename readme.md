@@ -10,6 +10,8 @@
 
 ![solarmodeloutput.png](solarmodeloutput.png)
 
+### Introduction
+
 The degree of self consumption makes all the difference to the economics of domestic solar PV. Especially with recent reductions in feed in tariff rates in the UK and a view looking forward to unsubsidised solar.
 
 Traditional household demand peaks in the morning and evenings on weekdays with a slightly more even profile on weekends. Solar generates most in the middle of the day resulting in a mismatch between supply and demand.
