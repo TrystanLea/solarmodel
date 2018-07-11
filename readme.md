@@ -1,5 +1,4 @@
-## title: Solar self-consumption model
-### published: 2018-06-21
+##  Solar self-consumption model
 
 The degree of self consumption makes all the difference to the economics of domestic solar PV. Especially with recent reductions in feed in tariff rates in the UK and a view looking forward to unsubsidised solar.
 
@@ -13,141 +12,136 @@ PV Diversion, smart EV charging and battery storage are then added to explore ho
 
 ### 1. Model Basics: Reading in solar PV data
 
-
 <table class="table">
-  <tr>
-  <td style="width:50%">
-    <p>The following examples use solar PV datasets from two installations in Snowdonia, North Wales collected over the last couple of years using OpenEnergyMonitor equipment.</p>
-    
-    <p><b>Solar1:</b> is a south facing 3.8 kW ground mounted system, normalised to 4.0 kW capacity.</p>
+<tr>
+<td style="width:50%">
+<p>The following examples use solar PV datasets from two installations in Snowdonia, North Wales collected over the last couple of years using OpenEnergyMonitor equipment.</p>
+<p><b>Solar1:</b> is a south facing 3.8 kW ground mounted system, normalised to 4.0 kW capacity.</p>
+<p><b>Solar2:</b> is a south facing 3.0 kW roof mounted system, again normalised to 4.0 kW capacity. This system has slightly more overshading than system 1.</p>
+</td>
+<td><img src="images/solarmap.png"/></td>
+</tr>
 
-    <p><b>Solar2:</b> is a south facing 3.0 kW roof mounted system, again normalised to 4.0 kW capacity. This system has slightly more overshading than system 1.</p>
-  </td>
-  <td><img src="images/solarmap.png"/></td>
-  </tr>
-  
-  <tr>
-  <td style="width:50%">
-    <p>This first example loads a solar PV feed from emoncms from our Solar1 dataset. The system achieves an output of 797 kWh/kWp.</p>
-    
-    <p>Solar2 has an output of 741 kWh/kWp for the same period.</p>
-    
-    <p>View source code: 1.php</p>
-  </td>
-  <td><img src="images/solar/1.png"/></td>
-  </tr>
+<tr>
+<td style="width:50%">
+<p>This first example loads a solar PV feed from emoncms from our Solar1 dataset. The system achieves an output of 797 kWh/kWp.</p>
+<p>Solar2 has an output of 741 kWh/kWp for the same period.</p>
+<p>View source code: 1.php</p>
+</td>
+<td><img src="images/solar/1.png"/></td>
+</tr>
 </table>
 
 ### 2. Flat demand
 
 <table class="table">
-  <tr>
-  <td style="width:50%">
-    <p>This second example introduces a basic flat demand profile and calculates the degree of solar self consumption as well as excess solar generation and amount of unmet demand.</p>
+<tr>
+<td style="width:50%">
+<p>This second example introduces a basic flat demand profile and calculates the degree of solar self consumption as well as excess solar generation and amount of unmet demand.</p>
 
-    <p>If we set the flat demand profile to match the annual output of the 4kW solar PV system, the degree of solar self consumption is 35% and the proportion of demand supplied by the solar is also 35%.</p>
+<p>If we set the flat demand profile to match the annual output of the 4kW solar PV system, the degree of solar self consumption is 35% and the proportion of demand supplied by the solar is also 35%.</p>
 
-    <p>Setting the solar PV capacity to 2.0 kW, halving the solar generation relative to demand results in a solar self consumption of 54% and reduction in demand supplied by solar to 27%.</p>
-    
-    <p>If the peak output of the solar PV system matched the flat demand level self consumption would be 100% but the amount of demand supplied by the solar would be relatively small (9%).</p>
+<p>Setting the solar PV capacity to 2.0 kW, halving the solar generation relative to demand results in a solar self consumption of 54% and reduction in demand supplied by solar to 27%.</p>
 
-    <p>View source code: 2.php</p>
-  </td>
-  <td><img src="images/solar/2.png"/></td>
-  </tr>
+<p>If the peak output of the solar PV system matched the flat demand level self consumption would be 100% but the amount of demand supplied by the solar would be relatively small (9%).</p>
+
+<p>View source code: 2.php</p>
+</td>
+<td><img src="images/solar/2.png"/></td>
+</tr>
 </table>
 
 ### 3. Traditional domestic electricity demand
 
 <table class="table">
-  <tr>
-  <td style="width:50%">
-    <p>This example replaces the flat demand profile with a detailed model of traditional household electricity demand and again calculates the degree of solar self consumption as well as excess solar generation and amount of unmet demand.</p>
-    
-    <p>The traditional demand model covers: lighting, laptops, internet router, central heating standby, kettle, electric shower, electric cooking, fridge/freezer, washing machine. Each with start and end times, power levels and in the case of fridge/freezer cycle repeat times. Weekday and weekend schedules are also taken into account. The modelled demand totals 1219 kWh/year or 3.3 kWh/d.</p>
+<tr>
+<td style="width:50%">
+<p>This example replaces the flat demand profile with a detailed model of traditional household electricity demand and again calculates the degree of solar self consumption as well as excess solar generation and amount of unmet demand.</p>
 
-    <p>If we set the solar PV system size to match the annual electricity demand (~1.6kW), the degree of solar self consumption is 24% and the proportion of demand supplied by the solar is also 24%.</p>
+<p>The traditional demand model covers: lighting, laptops, internet router, central heating standby, kettle, electric shower, electric cooking, fridge/freezer, washing machine. Each with start and end times, power levels and in the case of fridge/freezer cycle repeat times. Weekday and weekend schedules are also taken into account. The modelled demand totals 1219 kWh/year or 3.3 kWh/d.</p>
 
-    <p>Halving the solar generation relative to demand results in a solar self consumption of 38% and reduction in demand supplied by solar to 19%.</p>
+<p>If we set the solar PV system size to match the annual electricity demand (~1.6kW), the degree of solar self consumption is 24% and the proportion of demand supplied by the solar is also 24%.</p>
 
-    <p>View source code: 3a.php</p>
-    
-    <p>If we add an electric shower to the demand model, ran daily at 9:30pm for 10mins (enough for 2x short showers) it raises the consumption from 1219 kWh to 1718 kWh, 1.37 kWh/shower. If we keep the solar capacity the same as the example above, the self consumption stays the same at 24% while the demand supplied from solar falls to 17%, which makes sense as we are not adding any day time demand that the solar can supply. If we increase the solar capacity so that generation matched demand on an annual basis (2.2kW) the solar self consumption falls to 19%, while the demand supplied by solar raises to 19%.</p>
-    
-    <p>View source code: 3b.php</p>
-  </td>
-  <td>
-  
-  Lighting, Appliances and Cooking:<br>
-  <img src="images/solar/3a.png"/><br><br>
-  
-  Demand including electric shower:<br>
-  <img src="images/solar/3b.png"/></td>
-  </tr>
+<p>Halving the solar generation relative to demand results in a solar self consumption of 38% and reduction in demand supplied by solar to 19%.</p>
+
+<p>View source code: 3a.php</p>
+
+<p>If we add an electric shower to the demand model, ran daily at 9:30pm for 10mins (enough for 2x short showers) it raises the consumption from 1219 kWh to 1718 kWh, 1.37 kWh/shower. If we keep the solar capacity the same as the example above, the self consumption stays the same at 24% while the demand supplied from solar falls to 17%, which makes sense as we are not adding any day time demand that the solar can supply. If we increase the solar capacity so that generation matched demand on an annual basis (2.2kW) the solar self consumption falls to 19%, while the demand supplied by solar raises to 19%.</p>
+
+<p>View source code: 3b.php</p>
+</td>
+<td>
+
+Lighting, Appliances and Cooking:<br>
+<img src="images/solar/3a.png"/><br><br>
+
+Demand including electric shower:<br>
+<img src="images/solar/3b.png"/></td>
+</tr>
 </table>
 
 ### 4. Solar diversion to hot water
 
 <table class="table">
-  <tr>
-  <td style="width:50%">
-    <p>While instantaneous electric showers result in minimal energy loss compared to hot water cylinder systems, the demand is much more likely to happen at peak times where the grid is under most strain and peaker plants are most active. In a zero carbon energy system where peak demand exceeds wind and solar supply this unmet demand will likely be supplied by less efficient backup renewable gas systems. The ability to use storage such as heating up hot water cylinders can provide a good way of shifting demand.</p>
-    
-    <p>The simplest way of heating hot water with solar PV is with a PV Diverter – a box of power electronics that measures the amount of excess solar available and ‘diverts’ this excess electricity to an immersion heater. A more efficient but more complex way of doing this and more limited in terms of responsiveness would be to heat hot water via a heat pump.</p>
-    
-    <p>This example adds a hot water cylinder and PV diverter to the previous example. So that we can use the excess solar to heat up the hot water cylinder in order to avoid the need to import power from the grid later.</p>
-    
-    <p>Keeping the solar PV system size as above (2.2kW) and adding a 120L hot water cylinder with a PV diverter increases the solar self consumption from 19% to 52% and the demand supplied from solar from 19% to 49%.</p>
-    
-    <p>The hot water cylinder adds to the system losses and so pushes up overall demand by 7.3%. Increasing the solar PV system size to match annual demand (2.4kW), results in a solar self consumption and demand supplied from solar of 49%.</p>
-    
-    <p>Doubling the hot water cylinder size to 240L and adjusting the solar PV system size again (2.6kW) results in a solar self consumption of 54%.</p>
-    
-    <p>Halving the solar PV system size (1.2 kW) to produce half of the demand over a year, while keeping the hot water cylinder size at 120L results in a solar self consumption of 80% and a demand supplied from solar of 41%.</p>
+<tr>
+<td style="width:50%">
+<p>While instantaneous electric showers result in minimal energy loss compared to hot water cylinder systems, the demand is much more likely to happen at peak times where the grid is under most strain and peaker plants are most active. In a zero carbon energy system where peak demand exceeds wind and solar supply this unmet demand will likely be supplied by less efficient backup renewable gas systems. The ability to use storage such as heating up hot water cylinders can provide a good way of shifting demand.</p>
 
-    <p>View source code: 4.php</p>
-  </td>
-  <td><img src="images/solar/4.png"/></td>
-  </tr>
+<p>The simplest way of heating hot water with solar PV is with a PV Diverter – a box of power electronics that measures the amount of excess solar available and ‘diverts’ this excess electricity to an immersion heater. A more efficient but more complex way of doing this and more limited in terms of responsiveness would be to heat hot water via a heat pump.</p>
+
+<p>This example adds a hot water cylinder and PV diverter to the previous example. So that we can use the excess solar to heat up the hot water cylinder in order to avoid the need to import power from the grid later.</p>
+
+<p>Keeping the solar PV system size as above (2.2kW) and adding a 120L hot water cylinder with a PV diverter increases the solar self consumption from 19% to 52% and the demand supplied from solar from 19% to 49%.</p>
+
+<p>The hot water cylinder adds to the system losses and so pushes up overall demand by 7.3%. Increasing the solar PV system size to match annual demand (2.4kW), results in a solar self consumption and demand supplied from solar of 49%.</p>
+
+<p>Doubling the hot water cylinder size to 240L and adjusting the solar PV system size again (2.6kW) results in a solar self consumption of 54%.</p>
+
+<p>Halving the solar PV system size (1.2 kW) to produce half of the demand over a year, while keeping the hot water cylinder size at 120L results in a solar self consumption of 80% and a demand supplied from solar of 41%.</p>
+
+<p>View source code: 4.php</p>
+</td>
+<td><img src="images/solar/4.png"/></td>
+</tr>
 </table>
 
 
 ### 5. Day time and smart charging of an electric vehicle
 
 <table class="table">
-  <tr>
-  <td style="width:50%">
-    <p>Smart charging an EV when the sun is shining could also increase self consumption, particularly useful to anyone that works partly from home, or where the car is left at home perhaps on sunny days and its possible to cycle to work? Alternatively smart charging of EV’s at work would also make a lot of sense.</p>
-    
-    <p>This example add's just over 2000 kWh of EV charging, enough to drive ~8000 miles. The following charging times assume quite a bit of home charging.</p>
-    <p>Monday: 9am - 11am @ 2.3 kW<br>Tuesday: 2pm - 4pm @ 2.3kW<br>Wednesday: 10am - 3pm @ 2.3kW<br>Saturday: 9am - 11am @ 2.3kW<br>Sunday: 9am - 3pm @ 2.3kW</p>
-    
-    <p>Adding this demand to the previous example with PV diversion where solar self consumption was 48%, increases the solar self consumption to 71% (if we keep the solar capacity the same at 2.4kWp) while the proportion of demand supplied by the solar falls to 34%.</p>
-    
-    <p>Matching annual solar output with demand results in a solar self consumption and demand supplied from solar of 48% with a 5.1kW system.</p><p>Given that most domestic solar systems are at most 4.0 kW, limiting to this would result in a self consumption of 55% and demand supplied by solar of 43%.</p>
+<tr>
+<td style="width:50%">
+<p>Smart charging an EV when the sun is shining could also increase self consumption, particularly useful to anyone that works partly from home, or where the car is left at home perhaps on sunny days and its possible to cycle to work? Alternatively smart charging of EV’s at work would also make a lot of sense.</p>
 
-    <p>View source code: 5.php</p>
-  </td>
-  <td><img src="images/solar/5.png"/></td>
-  </tr>
+<p>This example add's just over 2000 kWh of EV charging, enough to drive ~8000 miles. The following charging times assume quite a bit of home charging.</p>
+<p>Monday: 9am - 11am @ 2.3 kW<br>Tuesday: 2pm - 4pm @ 2.3kW<br>Wednesday: 10am - 3pm @ 2.3kW<br>Saturday: 9am - 11am @ 2.3kW<br>Sunday: 9am - 3pm @ 2.3kW</p>
+
+<p>Adding this demand to the previous example with PV diversion where solar self consumption was 48%, increases the solar self consumption to 71% (if we keep the solar capacity the same at 2.4kWp) while the proportion of demand supplied by the solar falls to 34%.</p>
+
+<p>Matching annual solar output with demand results in a solar self consumption and demand supplied from solar of 48% with a 5.1kW system.</p><p>Given that most domestic solar systems are at most 4.0 kW, limiting to this would result in a self consumption of 55% and demand supplied by solar of 43%.</p>
+
+<p>View source code: 5.php</p>
+</td>
+<td><img src="images/solar/5.png"/></td>
+</tr>
 </table>
 
 ### 6. Battery Storage
 
 <table class="table">
-  <tr>
-  <td style="width:50%">
-    <p>Another option much talked about at the moment due to the dropping price, a battery store can soak up solar during the day and make it available later in the evening when demand is usually highest.</p>
-    <p>Adding a 2.5 kWh battery to the previous example (4.0kW PV) raises solar self consumption from 55% to 77% and the demand supplied by solar from 43% to 60%.</p>
-    <p>Adding a 5.0 kWh battery raises solar self consumption to 82% and the demand supplied by solar to 64%.</p>
-    <p>Adding a 10.0 kWh battery raises solar self consumption to 86% and the demand supplied by solar to 68%.</p>
-    <p>We can see that most of the benefit is to be had with the first kWh's of storage, adding more storage has reducing gains.</p>
-    <p>Increasing the solar PV system size to match demand on an annual basis (5.1kWp) results in a solar self consumption and demand supplied from solar of 75%. A system size designed to generate half the annual demand (2.5kWp) results in a self consumption of 99%.</p>
-    <p>The black line in the screenshot on the right shows the battery SOC. The EV charge later in the day is drawing from the battery as well as solar, leaving no capacity for the later evening peak, perhaps the control algorithm could be improved? (if removing the evening peak was of higher importance).</p>
-    <p>View source code: 6.php</p>
-  </td>
-  <td><img src="images/solar/6.png"/></td>
-  </tr>
+<tr>
+<td style="width:50%">
+<p>Another option much talked about at the moment due to the dropping price, a battery store can soak up solar during the day and make it available later in the evening when demand is usually highest.</p>
+<p>Adding a 2.5 kWh battery to the previous example (4.0kW PV) raises solar self consumption from 55% to 77% and the demand supplied by solar from 43% to 60%.</p>
+<p>Adding a 5.0 kWh battery raises solar self consumption to 82% and the demand supplied by solar to 64%.</p>
+<p>Adding a 10.0 kWh battery raises solar self consumption to 86% and the demand supplied by solar to 68%.</p>
+<p>We can see that most of the benefit is to be had with the first kWh's of storage, adding more storage has reducing gains.</p>
+<p>Increasing the solar PV system size to match demand on an annual basis (5.1kWp) results in a solar self consumption and demand supplied from solar of 75%. A system size designed to generate half the annual demand (2.5kWp) results in a self consumption of 99%.</p>
+<p>The black line in the screenshot on the right shows the battery SOC. The EV charge later in the day is drawing from the battery as well as solar, leaving no capacity for the later evening peak, perhaps the control algorithm could be improved? (if removing the evening peak was of higher importance).</p>
+<p>View source code: 6.php</p>
+</td>
+<td><img src="images/solar/6.png"/></td>
+</tr>
 </table>
 
 These examples show the potential of PV diversion, smart EV charging, battery storage and optimising the solar PV system size on solar self consumption, with the potential to increase self consumption from ~24% all the way up to 80-99% and the potential to increase the percentage of demand supplied by solar to 50-75%.
