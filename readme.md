@@ -26,7 +26,7 @@ PV Diversion, smart EV charging and battery storage are then added to explore ho
 <td style="width:50%">
 <p>This first example loads a solar PV feed from emoncms from our Solar1 dataset. The system achieves an output of 797 kWh/kWp.</p>
 <p>Solar2 has an output of 741 kWh/kWp for the same period.</p>
-<p>View source code: 1.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/1.php">1.php</a></p>
 </td>
 <td><img src="images/solar/1.png"/></td>
 </tr>
@@ -45,7 +45,7 @@ PV Diversion, smart EV charging and battery storage are then added to explore ho
 
 <p>If the peak output of the solar PV system matched the flat demand level self consumption would be 100% but the amount of demand supplied by the solar would be relatively small (9%).</p>
 
-<p>View source code: 2.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/2.php">2.php</a></p>
 </td>
 <td><img src="images/solar/2.png"/></td>
 </tr>
@@ -64,11 +64,11 @@ PV Diversion, smart EV charging and battery storage are then added to explore ho
 
 <p>Halving the solar generation relative to demand results in a solar self consumption of 38% and reduction in demand supplied by solar to 19%.</p>
 
-<p>View source code: 3a.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/3a.php">3a.php</a></p>
 
 <p>If we add an electric shower to the demand model, ran daily at 9:30pm for 10mins (enough for 2x short showers) it raises the consumption from 1219 kWh to 1718 kWh, 1.37 kWh/shower. If we keep the solar capacity the same as the example above, the self consumption stays the same at 24% while the demand supplied from solar falls to 17%, which makes sense as we are not adding any day time demand that the solar can supply. If we increase the solar capacity so that generation matched demand on an annual basis (2.2kW) the solar self consumption falls to 19%, while the demand supplied by solar raises to 19%.</p>
 
-<p>View source code: 3b.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/3b.php">3b.php</a></p>
 </td>
 <td>
 
@@ -99,7 +99,7 @@ Demand including electric shower:<br>
 
 <p>Halving the solar PV system size (1.2 kW) to produce half of the demand over a year, while keeping the hot water cylinder size at 120L results in a solar self consumption of 80% and a demand supplied from solar of 41%.</p>
 
-<p>View source code: 4.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/4.php">4.php</a></p>
 </td>
 <td><img src="images/solar/4.png"/></td>
 </tr>
@@ -120,7 +120,7 @@ Demand including electric shower:<br>
 
 <p>Matching annual solar output with demand results in a solar self consumption and demand supplied from solar of 48% with a 5.1kW system.</p><p>Given that most domestic solar systems are at most 4.0 kW, limiting to this would result in a self consumption of 55% and demand supplied by solar of 43%.</p>
 
-<p>View source code: 5.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/5.php">5.php</a></p>
 </td>
 <td><img src="images/solar/5.png"/></td>
 </tr>
@@ -138,7 +138,7 @@ Demand including electric shower:<br>
 <p>We can see that most of the benefit is to be had with the first kWh's of storage, adding more storage has reducing gains.</p>
 <p>Increasing the solar PV system size to match demand on an annual basis (5.1kWp) results in a solar self consumption and demand supplied from solar of 75%. A system size designed to generate half the annual demand (2.5kWp) results in a self consumption of 99%.</p>
 <p>The black line in the screenshot on the right shows the battery SOC. The EV charge later in the day is drawing from the battery as well as solar, leaving no capacity for the later evening peak, perhaps the control algorithm could be improved? (if removing the evening peak was of higher importance).</p>
-<p>View source code: 6.php</p>
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/6.php">6.php</a></p>
 </td>
 <td><img src="images/solar/6.png"/></td>
 </tr>
@@ -231,6 +231,8 @@ Battery costs have seen a 14% year on year reduction in cost between 2007 and 20
 - Standard tariff 15.2 p/kWh
 
 ### Example results with costs
+
+<p>View source code: <a href="https://github.com/TrystanLea/solarmodel/blob/master/7.php">7.php</a></p>
 
 The following example results are costed versions of the model runs above. Calculation assumes no energy cost inflation above retail-price-index to keep things simple.
 
