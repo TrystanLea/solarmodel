@@ -19,9 +19,9 @@ print json_encode($result)."\n";
 if ($result["success"]) {
     $feedid = $result["feedid"];
     
-    print "copy $dir/dataset/$dataset.meta /var/lib/phpfina/$feedid.meta\n";
-    copy("$dir/dataset/$dataset.meta","/var/lib/phpfina/$feedid.meta");
+    print "copy $dir/dataset/$dataset.meta $phpfinadir"."$feedid.meta\n";
+    copy("$dir/dataset/$dataset.meta","$phpfinadir"."$feedid.meta");
     
-    print "copy $dir/dataset/$dataset.meta /var/lib/phpfina/$feedid.meta\n";
-    copy("$dir/dataset/$dataset.dat","/var/lib/phpfina/$feedid.dat");
+    print "copy $dir/dataset/$dataset.meta $phpfinadir"."$feedid.meta\n";
+    copy("$dir/dataset/$dataset.dat","$phpfinadir"."$feedid.dat");
 }

@@ -39,21 +39,29 @@ class ModelHelper
         
         chdir($emoncms_dir);
         
-        require_once "settings.php";
-        $this->dir = $feed_settings["phpfina"]["datadir"];
+        global $phpfinadir;
+        require_once "process_settings.php";
+        $this->dir = $settings["feed"]["phpfina"]["datadir"];
+        $phpfinadir = $this->dir;
         
-        $mysqli = @new mysqli($server,$username,$password,$database,$port);
+        $mysqli = @new mysqli(
+            $settings["sql"]["server"],
+            $settings["sql"]["username"],
+            $settings["sql"]["password"],
+            $settings["sql"]["database"],
+            $settings["sql"]["port"]
+        );
         if ($mysqli->connect_error) {
             echo $mysqli->connect_error."\n"; die;
         }
         
-        if ($redis_enabled) {
+        if ($settings['redis']['enabled']) {
             $redis = new Redis();
-            $connected = $redis->connect($redis_server['host'], $redis_server['port']);
+            $connected = $redis->connect($settings['redis']['host'], $settings['redis']['port']);
             if (!$connected) { echo "Can't connect to redis"; die; }
-            if (!empty($redis_server['prefix'])) $redis->setOption(Redis::OPT_PREFIX, $redis_server['prefix']);
-            if (!empty($redis_server['auth'])) {
-                if (!$redis->auth($redis_server['auth'])) { echo "Redis autentication error"; die; }
+            if (!empty($settings['redis']['prefix'])) $redis->setOption(Redis::OPT_PREFIX, $settings['redis']['prefix']);
+            if (!empty($settings['redis']['auth'])) {
+                if (!$redis->auth($settings['redis']['auth'])) { echo "Redis autentication error"; die; }
             }
         } else {
             $redis = false;
@@ -62,7 +70,7 @@ class ModelHelper
         require_once "Lib/enum.php";
         require_once "Lib/EmonLogger.php";
         require_once "Modules/feed/feed_model.php";
-        $this->feed = new Feed($mysqli,$redis,$feed_settings);
+        $this->feed = new Feed($mysqli,$redis,$settings['feed']);
     }
 
     // ------------------------------------------------------------------------------
